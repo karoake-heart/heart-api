@@ -4,8 +4,11 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) => {
+    if(env == null){
+        env = {};
+    }
     let PORT = env.PORT || 3000;
-    let NODE_ENV = env.NODE_ENV || 'production';
+    let NODE_ENV = JSON.stringify(env.NODE_ENV) || 'production';
     let HEART_DATABASE_URL = JSON.stringify(env.HEART_DATABASE_URL);
 
     let CssLoader = {
@@ -32,15 +35,6 @@ module.exports = (env) => {
         target: 'node',
         externals: nodeExternals(),
         plugins: [
-            new webpack.DefinePlugin({
-                'process.env': {
-                    NODE_ENV: NODE_ENV,
-                    BROWSER: true,
-                    PORT: PORT,
-                    HEART_DATABASE_URL: HEART_DATABASE_URL
-                },
-                __DEV__: false
-            }),
             new ExtractTextPlugin({
                 filename: 'styles.css'
             })
@@ -76,7 +70,7 @@ module.exports = (env) => {
         plugins: [
             new webpack.DefinePlugin({
                 'process.env': {
-                    NODE_ENV: NODE_ENV,
+                    // NODE_ENV: NODE_ENV,
                     BROWSER: true,
                     PORT: PORT,
                     HEART_DATABASE_URL: HEART_DATABASE_URL
