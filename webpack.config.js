@@ -4,25 +4,10 @@ const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (env) => {
-    if(env == null){
+    if (env == null) {
         env = {};
     }
-    let PORT = env.PORT || 3000;
-    let NODE_ENV = JSON.stringify(env.NODE_ENV) || 'production';
     let HEART_DATABASE_URL = JSON.stringify(env.HEART_DATABASE_URL);
-
-    let CssLoader = {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: [{
-                loader: 'css-loader',
-            }
-            ],
-
-        })
-    };
     let serverConfig = {
         entry: {
             bundle: path.resolve(__dirname, 'server.js')
@@ -34,11 +19,6 @@ module.exports = (env) => {
         },
         target: 'node',
         externals: nodeExternals(),
-        plugins: [
-            new ExtractTextPlugin({
-                filename: 'styles.css'
-            })
-        ],
         module: {
             rules: [
                 {
@@ -52,7 +32,11 @@ module.exports = (env) => {
                     },
                     exclude: '/node_modules/'
                 },
-                CssLoader
+                {
+                    test: /\.css$/,
+                    exclude: /node_modules/,
+                    use: 'css-loader'
+                }
             ]
         }
     };
@@ -70,9 +54,7 @@ module.exports = (env) => {
         plugins: [
             new webpack.DefinePlugin({
                 'process.env': {
-                    // NODE_ENV: NODE_ENV,
                     BROWSER: true,
-                    PORT: PORT,
                     HEART_DATABASE_URL: HEART_DATABASE_URL
                 },
                 __DEV__: false
@@ -95,7 +77,18 @@ module.exports = (env) => {
                     },
                     exclude: '/node_modules/'
                 },
-                CssLoader
+                {
+                    test: /\.css$/,
+                    exclude: /node_modules/,
+                    use: ExtractTextPlugin.extract({
+                        fallback: 'style-loader',
+                        use: [{
+                            loader: 'css-loader',
+                        }
+                        ],
+
+                    })
+                }
             ]
         }
     };

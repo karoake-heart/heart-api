@@ -34,18 +34,18 @@ function App(props) {
     });
     let o = objects.filter((obj) => interval >= parseFloat(obj.interval_start) && interval <= obj.interval_end)[0];
 
-    if(o == undefined){
+    if(!o){
         o = {};
     }
 
     const ButtonFlipper = (props) => {
         return <button style={props.style} onClick={(e) => {
-            props.setColor(props.color)
+            setMainColor(props.color)
         }}> {props.color} </button>
     };
     setTimeout(() => {
-        setInterval(interval + .1);
-    }, 100);
+        setInterval(interval + .6);
+    }, 200);
 
     return (
         <div className="App">
