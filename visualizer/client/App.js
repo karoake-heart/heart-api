@@ -13,15 +13,22 @@ function App(props) {
         let blue = 100;
         let green = 100;
         let red = 100;
+        let INVERSE_MAX = 200;
         switch (color) {
             case "red":
                 red = parseFloat(obj.value);
+                green = INVERSE_MAX - parseFloat(obj.value);
+                blue = INVERSE_MAX - parseFloat(obj.value);
                 break;
             case "green":
                 green = parseFloat(obj.value);
+                red = INVERSE_MAX - parseFloat(obj.value);
+                blue = INVERSE_MAX - parseFloat(obj.value);
                 break;
             case "blue":
                 blue = parseFloat(obj.value);
+                red = INVERSE_MAX - parseFloat(obj.value);
+                green = INVERSE_MAX - parseFloat(obj.value);
                 break;
         }
         let condition = interval >= parseFloat(obj.interval_start) && interval <= obj.interval_end;
