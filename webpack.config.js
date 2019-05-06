@@ -32,6 +32,7 @@ let serverConfig = {
                 BROWSER: true
             },
             'process.env.HEART_DATABASE_URL': JSON.stringify(process.env.HEART_DATABASE_URL),
+            'process.env.PORT': JSON.stringify(process.env.PORT || 3000),
             __DEV__: false
         }),
         new ExtractTextPlugin({

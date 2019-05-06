@@ -9,8 +9,6 @@ import analyticsMiddleware from './lib/analytics_middleware';
 let app = express();
 let PORT = process.env.PORT || 3000;
 
-
-
 app.all('/*', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', '*');
