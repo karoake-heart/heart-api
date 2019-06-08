@@ -2,6 +2,7 @@
 from __future__ import print_function
 import librosa
 import csv
+import database.database
 
 
 class SongAnalyzer:
@@ -30,16 +31,21 @@ class SongAnalyzer:
         return wf, sr
 
     def generate_tempo_csv(self):
-        with open('outputs/{}.csv'.format(self.song_name), 'w', newline='') as csvfile:
-            fieldnames = ['song_name', 'tempo', 'point_in_song_seconds']
+        with open('outputs/tempo/{}.csv'.format(self.song_name), 'w', newline='') as csvfile:
+            fieldnames = ['interval_start', 'interval_end', 'song_url', 'value_type', 'value']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()
             for b in self.beat_bins:
                 tempo, form = librosa.beat.beat_track(y=b[0], sr=b[1])
-                writer.writerow({'song_name': self.song_name, 'tempo': tempo, 'point_in_song_seconds': b[2]})
+                writer.writerow({'song_url': 'songs/{}.mp3'.format(self.song_name),
+                                 'value_type': 'tempo',
+                                 'value': tempo,
+                                 'interval_start': b[2],
+                                 'interval_end': b[2] + self.bin_size})
 
 analyzer = SongAnalyzer("nobody_beats_the_drum")
 analyzer.generate_tempo_csv()
+
 
 
 

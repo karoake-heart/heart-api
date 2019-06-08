@@ -3,3 +3,8 @@ node_modules/
 analysis/songs/
 visualizer/build
 visualizer/node_modules
+bundle.js
+styles.css
+visualizer/client.js
+visualizer/styles.css
+dist/
